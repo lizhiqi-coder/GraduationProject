@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">GraduationProject</string>
+    <string name="app_name_v2" >毕业设计</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="button_ok">ok</string>
+    <string name="button_cancel">cancel</string>
+
+    <!-- 自定义dialog界面 -->
+    <string name="dialog_title">title</string>
+    <string name="dialog_message">message</string>
+</resources>
