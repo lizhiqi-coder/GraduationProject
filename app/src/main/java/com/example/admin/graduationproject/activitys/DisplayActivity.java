@@ -26,7 +26,7 @@ public class DisplayActivity extends BaseActivity {
 
         glSurfaceView = new GLSurfaceView(this);
 
-        mRender = new MainRender();
+        mRender = new MainRender(this);
         if (AppUtils.isOpenGl2Support()) {
             glSurfaceView.setEGLContextClientVersion(2);
 

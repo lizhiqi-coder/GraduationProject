@@ -17,6 +17,7 @@ import static android.opengl.GLES20.glDeleteProgram;
 import static android.opengl.GLES20.glDeleteShader;
 import static android.opengl.GLES20.glGetProgramiv;
 import static android.opengl.GLES20.glGetShaderiv;
+import static android.opengl.GLES20.glLinkProgram;
 import static android.opengl.GLES20.glShaderSource;
 import static android.opengl.GLES20.glValidateProgram;
 
@@ -54,10 +55,19 @@ public class ShaderHelper {
         if (compileStatus[0] == 0) {
             glDeleteShader(shaderObjectId);
 
+            return 0;
+
         }
         return shaderObjectId;
     }
 
+    /**
+     * 链接openGL 程序
+     *
+     * @param vertexShaderId
+     * @param fragmentShaderId
+     * @return
+     */
     public static int linkProgram(int vertexShaderId, int fragmentShaderId) {
 
         final int programObjectId = glCreateProgram();
@@ -66,6 +76,8 @@ public class ShaderHelper {
         }
         glAttachShader(programObjectId, vertexShaderId);
         glAttachShader(programObjectId, fragmentShaderId);
+
+        glLinkProgram(programObjectId);
 
         final int[] linkStatus = new int[1];
         glGetProgramiv(programObjectId, GL_LINK_STATUS, linkStatus, 0);
