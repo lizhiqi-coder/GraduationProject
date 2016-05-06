@@ -11,19 +11,22 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public class CubeModel extends Base3DModel {
 
-    public static final int VERTEX_STEP = 2;
+    public static final int VERTEX_STEP = 4;
 
     private final FloatBuffer vertexData;
 
+    /**
+     * x,y,z,w
+     */
     private final float[] rawData = {
 
-            -0.5f, -0.5f,
-            0.5f, 0.5f,
-            -0.5f, 0.5f,
+            -0.5f, -0.8f, 0f, 1f,
+            0.5f, 0.8f, 0f, 1f,
+            -0.5f, 0.8f, 0f, 1f,
 
-            -0.5f, -0.5f,
-            0.5f, -0.5f,
-            0.5f, 0.5f
+            -0.5f, -0.8f, 0f, 1f,
+            0.5f, -0.8f, 0f, 1f,
+            0.5f, 0.8f, 0f, 1f
 
 
     };

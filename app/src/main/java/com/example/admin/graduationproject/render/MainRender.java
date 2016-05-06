@@ -19,6 +19,7 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
 
     private int uColorLocation;
     private int aPositionLocation;
+    private int uMatrixLocation;
 
 
     int program;
@@ -39,6 +40,7 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
 
         uColorLocation = getUniLocation(program, Constant.UNIFORM_COLOR);
         aPositionLocation = getAttrLocation(program, Constant.ATTR_POSITION);
+        uMatrixLocation = getUniLocation(program, Constant.UNIFORM_MATRIX);
 
         CubeModel model = new CubeModel();
 
@@ -52,6 +54,10 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceChanged(GL10 gl10, int w, int h) {
         glViewport(0, 0, w, h);
+
+        adapterScreen(w, h);
+
+
     }
 
     @Override
@@ -62,6 +68,9 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
         updateUniColor(uColorLocation, R.color.deeppink);
 
         drawTriangles(0, 6);
+
+
+        bindMatrix(uMatrixLocation, projectMatrix);
 
     }
 }
