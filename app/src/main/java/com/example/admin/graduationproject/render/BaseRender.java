@@ -24,6 +24,7 @@ import static android.opengl.GLES20.glUniform4f;
 import static android.opengl.GLES20.glUniformMatrix4fv;
 import static android.opengl.GLES20.glUseProgram;
 import static android.opengl.GLES20.glVertexAttribPointer;
+import static android.opengl.Matrix.multiplyMM;
 import static android.opengl.Matrix.orthoM;
 
 /**
@@ -38,6 +39,13 @@ public class BaseRender {
 
     //投影矩阵
     protected final float[] projectMatrix = new float[16];
+
+    //最终的裁剪矩阵 clipMatrix=projectMatrix*modelMatrix;
+    protected final float[] clipMatrix = new float[16];
+
+    public void updateMatrix() {
+        multiplyMM(clipMatrix, 0, projectMatrix, 0, modelMatrix, 0);
+    }
 
     public BaseRender(Context context) {
 

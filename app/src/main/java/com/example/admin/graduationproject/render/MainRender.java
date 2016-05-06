@@ -11,6 +11,10 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import static android.opengl.GLES20.glViewport;
+import static android.opengl.Matrix.perspectiveM;
+import static android.opengl.Matrix.rotateM;
+import static android.opengl.Matrix.setIdentityM;
+import static android.opengl.Matrix.translateM;
 
 /**
  * Created by admin on 2016/5/5.
@@ -20,7 +24,6 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
     private int uColorLocation;
     private int aPositionLocation;
     private int uMatrixLocation;
-
 
     int program;
 
@@ -57,6 +60,15 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
 
         adapterScreen(w, h);
 
+        perspectiveM(projectMatrix, 0, 45f, (float) w / (float) h, 1f, 10f);
+
+        setIdentityM(modelMatrix, 0);
+        translateM(modelMatrix, 0, 0f, 0f, -2f);
+
+        translateM(modelMatrix, 0, 0f, 0f, -2.5f);
+        rotateM(modelMatrix, 0, -60f, 1f, 0f, 0f);
+
+        updateMatrix();
 
     }
 
@@ -70,7 +82,7 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
         drawTriangles(0, 6);
 
 
-        bindMatrix(uMatrixLocation, projectMatrix);
+        bindMatrix(uMatrixLocation, clipMatrix);
 
     }
 }
