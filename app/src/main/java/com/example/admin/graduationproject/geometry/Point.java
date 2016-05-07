@@ -21,4 +21,13 @@ public class Point {
                 y + vector.y,
                 z + vector.z);
     }
+
+    public Point getOppositeByPoint(Point center) {
+        float ox = center.x * 2f - x;
+        float oy = center.y * 2f - y;
+        float oz = center.z * 2f - z;
+        Point opposite = new Point(ox, oy, oz);
+
+        return opposite;
+    }
 }

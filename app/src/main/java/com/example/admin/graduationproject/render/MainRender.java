@@ -12,7 +12,6 @@ import javax.microedition.khronos.opengles.GL10;
 
 import static android.opengl.GLES20.glViewport;
 import static android.opengl.Matrix.perspectiveM;
-import static android.opengl.Matrix.rotateM;
 import static android.opengl.Matrix.setIdentityM;
 import static android.opengl.Matrix.translateM;
 
@@ -26,6 +25,7 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
     private int uMatrixLocation;
 
     int program;
+    CubeModel model;
 
     public MainRender(Context context) {
         super(context);
@@ -45,7 +45,7 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
         aPositionLocation = getAttrLocation(program, Constant.ATTR_POSITION);
         uMatrixLocation = getUniLocation(program, Constant.UNIFORM_MATRIX);
 
-        CubeModel model = new CubeModel();
+        model = new CubeModel();
 
         bindVertexData(aPositionLocation, model.getVertexData(), CubeModel.VERTEX_STEP);
 
@@ -66,7 +66,7 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
         translateM(modelMatrix, 0, 0f, 0f, -2f);
 
         translateM(modelMatrix, 0, 0f, 0f, -2.5f);
-        rotateM(modelMatrix, 0, -60f, 1f, 0f, 0f);
+//        rotateM(modelMatrix, 0, -60f, 1f, 0f, 0f);
 
         updateMatrix();
 
@@ -77,10 +77,31 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
 
         clearScreenBuffer();
 
-        updateUniColor(uColorLocation, R.color.deeppink);
+        updateUniColor(uColorLocation, R.color.white);
 
         drawTriangles(0, 6);
 
+
+        updateUniColor(uColorLocation, R.color.blue);
+
+        drawTriangles(6, 6);
+
+
+        updateUniColor(uColorLocation, R.color.red);
+
+        drawTriangles(12, 6);
+
+        updateUniColor(uColorLocation, R.color.yellow);
+
+        drawTriangles(18, 6);
+
+        updateUniColor(uColorLocation, R.color.black);
+
+        drawTriangles(24, 6);
+
+//        updateUniColor(uColorLocation, R.color.green);
+//
+//        drawTriangles(30, 6);
 
         bindMatrix(uMatrixLocation, clipMatrix);
 

@@ -135,15 +135,15 @@ public class BaseRender {
     }
 
     protected void drawTriangles(int startPosition, int vertexCount) {
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        glDrawArrays(GL_TRIANGLES, startPosition, vertexCount);
     }
 
     protected void drawTriangleFun(int startPosition, int vertexCount) {
-        glDrawArrays(GL_TRIANGLE_FAN, 0, 6);
+        glDrawArrays(GL_TRIANGLE_FAN, startPosition, vertexCount);
     }
 
     protected void drawPoints(int startPosition, int vertexCount) {
-        glDrawArrays(GL_POINTS, 0, 6);
+        glDrawArrays(GL_POINTS, startPosition, vertexCount);
     }
 
 
