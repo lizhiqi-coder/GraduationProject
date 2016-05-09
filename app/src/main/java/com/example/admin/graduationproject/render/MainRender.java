@@ -14,6 +14,7 @@ import static android.opengl.GLES20.glViewport;
 import static android.opengl.Matrix.perspectiveM;
 import static android.opengl.Matrix.setIdentityM;
 import static android.opengl.Matrix.translateM;
+import static android.opengl.Matrix.rotateM;
 
 /**
  * Created by admin on 2016/5/5.
@@ -35,7 +36,7 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 gl10, EGLConfig eglConfig) {
 
 
-        clearScreenByColor(R.color.gray);
+        clearScreenByColor(R.color.black);
 
         program = getProgramByShaderId(R.raw.cube_vertex_shader, R.raw.cube_fragment_shader);
 
@@ -66,7 +67,7 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
         translateM(modelMatrix, 0, 0f, 0f, -2f);
 
         translateM(modelMatrix, 0, 0f, 0f, -2.5f);
-//        rotateM(modelMatrix, 0, -60f, 1f, 0f, 0f);
+        rotateM(modelMatrix, 0, -60f, 1f, 0f, 0f);
 
         updateMatrix();
 
@@ -95,7 +96,7 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
 
         drawTriangles(18, 6);
 
-        updateUniColor(uColorLocation, R.color.black);
+        updateUniColor(uColorLocation, R.color.deeppink);
 
         drawTriangles(24, 6);
 

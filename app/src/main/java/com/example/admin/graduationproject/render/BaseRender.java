@@ -14,6 +14,7 @@ import static android.opengl.GLES20.GL_FLOAT;
 import static android.opengl.GLES20.GL_POINTS;
 import static android.opengl.GLES20.GL_TRIANGLES;
 import static android.opengl.GLES20.GL_TRIANGLE_FAN;
+import static android.opengl.GLES20.GL_TRIANGLE_STRIP;
 import static android.opengl.GLES20.glClear;
 import static android.opengl.GLES20.glClearColor;
 import static android.opengl.GLES20.glDrawArrays;
@@ -35,13 +36,15 @@ public class BaseRender {
     protected Context mContext;
 
     //模型矩阵，用于移动对象
-    protected final float[] modelMatrix = new float[16];
+    protected  float[] modelMatrix = new float[16];
 
     //投影矩阵
-    protected final float[] projectMatrix = new float[16];
+    protected  float[] projectMatrix = new float[16];
 
     //最终的裁剪矩阵 clipMatrix=projectMatrix*modelMatrix;
-    protected final float[] clipMatrix = new float[16];
+    protected  float[] clipMatrix = new float[16];
+
+    protected float[] viewMatrix = new float[16];
 
     public void updateMatrix() {
         multiplyMM(clipMatrix, 0, projectMatrix, 0, modelMatrix, 0);
@@ -140,6 +143,10 @@ public class BaseRender {
 
     protected void drawTriangleFun(int startPosition, int vertexCount) {
         glDrawArrays(GL_TRIANGLE_FAN, startPosition, vertexCount);
+    }
+
+    protected void drawTriangleStrip(int startPosition, int vertexCount) {
+        glDrawArrays(GL_TRIANGLE_STRIP, startPosition, vertexCount);
     }
 
     protected void drawPoints(int startPosition, int vertexCount) {

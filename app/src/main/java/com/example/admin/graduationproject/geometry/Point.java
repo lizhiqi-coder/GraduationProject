@@ -30,4 +30,12 @@ public class Point {
 
         return opposite;
     }
+
+    public float[] getVertexArr4D() {
+        float[] data = {
+                this.x, this.y, this.z, 1f
+        };
+
+        return data;
+    }
 }
