@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.admin.graduationproject.activitys.DisplayActivity;
+import com.example.admin.graduationproject.activitys.SkyboxActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +53,17 @@ public class MainActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        switch (id) {
+
+            case R.id.action_settings:
+                return true;
+            case R.id.skybox:
+                Intent intent = new Intent(MainActivity.this, SkyboxActivity.class);
+                startActivity(intent);
+
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

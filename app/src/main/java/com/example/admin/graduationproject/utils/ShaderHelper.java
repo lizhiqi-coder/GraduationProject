@@ -4,6 +4,8 @@ package com.example.admin.graduationproject.utils;
  * Created by admin on 2016/4/27.
  */
 
+import android.content.Context;
+
 import static android.opengl.GLES20.GL_COMPILE_STATUS;
 import static android.opengl.GLES20.GL_FRAGMENT_SHADER;
 import static android.opengl.GLES20.GL_LINK_STATUS;
@@ -22,6 +24,7 @@ import static android.opengl.GLES20.glShaderSource;
 import static android.opengl.GLES20.glValidateProgram;
 
 public class ShaderHelper {
+
     private static final String TAG = "ShaderHelper";
 
 
@@ -95,5 +98,34 @@ public class ShaderHelper {
         glGetProgramiv(programobjectId, GL_VALIDATE_STATUS, validateStatus, 0);
         return validateStatus[0] != 0;
     }
+
+    public static int getProgramByShaderId(Context context, int vertexShaderResId, int fragmentShaderResId) {
+
+        int program = ShaderHelper.linkProgram(
+
+                findVertexShaderById(context, vertexShaderResId),
+                findFragmentShaderById(context, fragmentShaderResId)
+
+        );
+
+        return program;
+
+    }
+
+    public static int findVertexShaderById(Context context, int id) {
+        String res = TextResReader.readTextFileFromRes(context, id);
+        int shaderId = compileVertexShader(res);
+
+        return shaderId;
+    }
+
+    public static int findFragmentShaderById(Context context, int id) {
+
+        String res = TextResReader.readTextFileFromRes(context, id);
+        int shaderId = compileFragmentShader(res);
+
+        return shaderId;
+    }
+
 
 }

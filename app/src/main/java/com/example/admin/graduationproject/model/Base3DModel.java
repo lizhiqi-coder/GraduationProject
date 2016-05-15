@@ -7,9 +7,9 @@ import javax.microedition.khronos.opengles.GL10;
  */
 public abstract class Base3DModel {
 
-    protected static final int BYTES_PER_FLOAT = 4;
-    protected static final int BYTES_PER_INT = 4;
-    protected static final int BYTES_PER_SHORT = 2;
+    public static final int BYTES_PER_FLOAT = 4;
+    public static final int BYTES_PER_INT = 4;
+    public static final int BYTES_PER_SHORT = 2;
 
 
     abstract public void draw(GL10 gl);

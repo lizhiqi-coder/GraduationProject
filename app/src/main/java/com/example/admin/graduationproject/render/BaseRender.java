@@ -41,13 +41,12 @@ public class BaseRender {
     //投影矩阵
     protected  float[] projectMatrix = new float[16];
 
-    //最终的裁剪矩阵 clipMatrix=projectMatrix*modelMatrix;
-    protected  float[] clipMatrix = new float[16];
+    protected float[] viewProjectMatrix = new float[16];
 
-    protected float[] viewMatrix = new float[16];
+    protected int xRotation, yRotation;
 
     public void updateMatrix() {
-        multiplyMM(clipMatrix, 0, projectMatrix, 0, modelMatrix, 0);
+        multiplyMM(viewProjectMatrix, 0, projectMatrix, 0, modelMatrix, 0);
     }
 
     public BaseRender(Context context) {
@@ -184,5 +183,9 @@ public class BaseRender {
         } else {
             orthoM(projectMatrix, 0, -1f, 1f, -aspectRatio, aspectRatio, -1f, 1f);
         }
+    }
+
+    public void handleTouchDrag(float deltaX, float deltaY) {
+
     }
 }

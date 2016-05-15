@@ -104,7 +104,7 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
 //
 //        drawTriangles(30, 6);
 
-        bindMatrix(uMatrixLocation, clipMatrix);
+        bindMatrix(uMatrixLocation, viewProjectMatrix);
 
     }
 }
