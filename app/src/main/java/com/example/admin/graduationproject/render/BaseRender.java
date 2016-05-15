@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.admin.graduationproject.R;
 import com.example.admin.graduationproject.utils.ColorHelper;
+import com.example.admin.graduationproject.utils.LogUtils;
 import com.example.admin.graduationproject.utils.ShaderHelper;
 import com.example.admin.graduationproject.utils.TextResReader;
 
@@ -33,13 +34,15 @@ import static android.opengl.Matrix.orthoM;
  */
 public class BaseRender {
 
+    private final static String TAG = "br";
+
     protected Context mContext;
 
     //模型矩阵，用于移动对象
-    protected  float[] modelMatrix = new float[16];
+    protected float[] modelMatrix = new float[16];
 
     //投影矩阵
-    protected  float[] projectMatrix = new float[16];
+    protected float[] projectMatrix = new float[16];
 
     protected float[] viewProjectMatrix = new float[16];
 
@@ -187,5 +190,16 @@ public class BaseRender {
 
     public void handleTouchDrag(float deltaX, float deltaY) {
 
+        xRotation += deltaX / 16f;
+        yRotation += deltaY / 16f;
+        LogUtils.d(TAG, "xRotation :" + xRotation);
+        LogUtils.d(TAG, "yRotation :" + yRotation);
+
+        if (yRotation < -90) {
+            yRotation = -90;
+        } else if (yRotation > 90) {
+            yRotation = 90;
+        }
+        updateMatrix();
     }
 }

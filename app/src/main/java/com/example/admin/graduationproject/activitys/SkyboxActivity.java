@@ -14,19 +14,22 @@ import com.example.admin.graduationproject.utils.AppUtils;
 public class SkyboxActivity extends BaseActivity {
 
     private GLSurfaceView glSurfaceView;
-    private SkyboxRender render;
+    private SkyboxRender mRender;
+    private boolean hasSetRender = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         glSurfaceView = new GLSurfaceView(this);
-        render = new SkyboxRender(this);
+        mRender = new SkyboxRender(this);
 
         if (AppUtils.isOpenGl2Support()) {
             glSurfaceView.setEGLContextClientVersion(2);
 
-            glSurfaceView.setRenderer(render);
+            glSurfaceView.setRenderer(mRender);
+
+            hasSetRender = true;
         } else {
             Toast.makeText(this, "this device does support opengl ES 2.0", Toast.LENGTH_SHORT).show();
 
@@ -35,6 +38,25 @@ public class SkyboxActivity extends BaseActivity {
 
         setContentView(glSurfaceView);
 
+        initTouchListener(glSurfaceView, mRender);
 
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (hasSetRender) {
+            glSurfaceView.onResume();
+
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (hasSetRender) {
+            glSurfaceView.onPause();
+        }
     }
 }
