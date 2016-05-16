@@ -39,52 +39,10 @@ public class DisplayActivity extends BaseActivity {
 
         setContentView(glSurfaceView);
 
-        initTouchListener();
+        initTouchListener(glSurfaceView, mRender);
 
     }
 
-    private void initTouchListener() {
-        glSurfaceView.setOnTouchListener(new View.OnTouchListener() {
-            float previousX, previousY;
-
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-
-                int action = motionEvent.getAction();
-
-                if (motionEvent == null) {
-                    return false;
-                }
-
-
-                switch (action) {
-
-                    case MotionEvent.ACTION_DOWN:
-                        previousX = motionEvent.getX();
-                        previousY = motionEvent.getY();
-                        break;
-
-                    case MotionEvent.ACTION_MOVE:
-                        final float deltaX = motionEvent.getX() - previousX;
-                        final float deltaY = motionEvent.getY() - previousY;
-                        glSurfaceView.queueEvent(new Runnable() {
-                            @Override
-                            public void run() {
-                                mRender.handleTouchDrag(deltaX, deltaY);
-                            }
-                        });
-
-                        break;
-                }
-
-
-                return true;
-            }
-        });
-
-
-    }
 
     @Override
     protected void onPause() {

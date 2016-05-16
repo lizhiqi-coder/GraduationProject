@@ -13,6 +13,7 @@ import javax.microedition.khronos.opengles.GL10;
 import static android.opengl.GLES20.glViewport;
 import static android.opengl.Matrix.perspectiveM;
 import static android.opengl.Matrix.setIdentityM;
+import static android.opengl.Matrix.setLookAtM;
 import static android.opengl.Matrix.translateM;
 import static android.opengl.Matrix.rotateM;
 
@@ -63,6 +64,8 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
 
         perspectiveM(projectMatrix, 0, 45f, (float) w / (float) h, 1f, 10f);
 
+        setLookAtM(viewMatrix, 0, 0f, 1.2f, 2.2f, 0f, 0f, 0f, 0f, 1f, 0f);
+
         setIdentityM(modelMatrix, 0);
         translateM(modelMatrix, 0, 0f, 0f, -2f);
 
@@ -104,7 +107,7 @@ public class MainRender extends BaseRender implements GLSurfaceView.Renderer {
 //
 //        drawTriangles(30, 6);
 
-        bindMatrix(uMatrixLocation, viewProjectMatrix);
+        bindMatrix(uMatrixLocation, modelViewProjectMatrix);
 
     }
 }

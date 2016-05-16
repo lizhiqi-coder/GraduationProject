@@ -3,6 +3,7 @@ package com.example.admin.graduationproject.render;
 import android.content.Context;
 
 import com.example.admin.graduationproject.R;
+import com.example.admin.graduationproject.geometry.Point;
 import com.example.admin.graduationproject.utils.ColorHelper;
 import com.example.admin.graduationproject.utils.LogUtils;
 import com.example.admin.graduationproject.utils.ShaderHelper;
@@ -28,6 +29,7 @@ import static android.opengl.GLES20.glUseProgram;
 import static android.opengl.GLES20.glVertexAttribPointer;
 import static android.opengl.Matrix.multiplyMM;
 import static android.opengl.Matrix.orthoM;
+import static android.opengl.Matrix.setLookAtM;
 
 /**
  * Created by admin on 2016/5/5.
@@ -41,20 +43,35 @@ public class BaseRender {
     //模型矩阵，用于移动对象
     protected float[] modelMatrix = new float[16];
 
+    protected float[] viewMatrix = new float[16];
     //投影矩阵
     protected float[] projectMatrix = new float[16];
 
     protected float[] viewProjectMatrix = new float[16];
 
+    protected float[] modelViewProjectMatrix = new float[16];
+
+
     protected int xRotation, yRotation;
 
+    protected float scale;
+
+    protected static final float SCALE_MAX = 5f;
+    protected static final float SCALE_MIN = 0.1f;
+    protected static final float SCALE_STEP = 0.02f;
+
+    protected Point scalePoint;
+
     public void updateMatrix() {
-        multiplyMM(viewProjectMatrix, 0, projectMatrix, 0, modelMatrix, 0);
+        multiplyMM(viewProjectMatrix, 0, projectMatrix, 0, viewMatrix, 0);
+        multiplyMM(modelViewProjectMatrix, 0, viewProjectMatrix, 0, modelMatrix, 0);
     }
 
     public BaseRender(Context context) {
 
         mContext = context;
+        scalePoint = new Point(0, 0, 0);
+        scale = 1f;
 
     }
 
@@ -200,6 +217,41 @@ public class BaseRender {
         } else if (yRotation > 90) {
             yRotation = 90;
         }
-        updateMatrix();
+    }
+
+
+    public void handleDoubleClick() {
+
+        if (scale >= 3) {
+            while (scale > 1) {
+                downScale();
+            }
+
+            return;
+        }
+        while (scale < 3) {
+            upScale();
+        }
+    }
+
+
+    public void upScale() {
+        scale += SCALE_STEP;
+        if (scale >= SCALE_MAX) {
+            scale = SCALE_MAX;
+        }
+    }
+
+    public void downScale() {
+        scale -= SCALE_STEP;
+        if (scale <= SCALE_MIN) {
+            scale = SCALE_MIN;
+        }
+    }
+
+    protected void setVisualAngle(Point eyePosition, Point lookPosition, Point headPosition) {
+        setLookAtM(viewMatrix, 0, eyePosition.x, eyePosition.y, eyePosition.z,
+                lookPosition.x, lookPosition.y, lookPosition.z,
+                headPosition.x, headPosition.y, headPosition.z);
     }
 }

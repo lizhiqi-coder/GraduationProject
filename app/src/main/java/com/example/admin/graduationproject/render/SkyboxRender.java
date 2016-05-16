@@ -8,6 +8,7 @@ import android.content.Context;
 import android.opengl.GLSurfaceView;
 
 import com.example.admin.graduationproject.R;
+import com.example.admin.graduationproject.geometry.Point;
 import com.example.admin.graduationproject.model.Skybox;
 import com.example.admin.graduationproject.programs.SkyboxShaderProgram;
 import com.example.admin.graduationproject.utils.TextureHelper;
@@ -18,6 +19,7 @@ import javax.microedition.khronos.opengles.GL10;
 import static android.opengl.GLES20.glViewport;
 import static android.opengl.Matrix.perspectiveM;
 import static android.opengl.Matrix.rotateM;
+import static android.opengl.Matrix.scaleM;
 import static android.opengl.Matrix.setIdentityM;
 
 /**
@@ -61,6 +63,11 @@ public class SkyboxRender extends BaseRender implements GLSurfaceView.Renderer {
 
         perspectiveM(projectMatrix, 0, 45f, (float) w / (float) h, 1f, 10f);
 
+        Point eye = new Point(0f, 0f, 1f);
+        Point look = new Point(0f, 0f, 0f);
+        Point head = new Point(0f, 0.8f, 0f);
+        setVisualAngle(eye, look, head);
+
 
     }
 
@@ -77,10 +84,12 @@ public class SkyboxRender extends BaseRender implements GLSurfaceView.Renderer {
         setIdentityM(modelMatrix, 0);
         rotateM(modelMatrix, 0, -yRotation, 1f, 0f, 0f);
         rotateM(modelMatrix, 0, -xRotation, 0f, 1f, 0f);
+
+        scaleM(modelMatrix, 0, scale, scale, scale);
         updateMatrix();
 
         program.useProgram();
-        program.setUniforms(viewProjectMatrix, texture);
+        program.setUniforms(modelViewProjectMatrix, texture);
         skybox.bindData(program);
         skybox.draw();
 
