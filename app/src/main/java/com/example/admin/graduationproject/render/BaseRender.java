@@ -58,7 +58,7 @@ public class BaseRender {
 
     protected static final float SCALE_MAX = 5f;
     protected static final float SCALE_MIN = 0.1f;
-    protected static final float SCALE_STEP = 0.02f;
+    protected static final float SCALE_STEP = 0.04f;
 
     protected Point scalePoint;
 
@@ -221,29 +221,37 @@ public class BaseRender {
 
 
     public void handleDoubleClick() {
+        long intervalStart = System.currentTimeMillis();
 
         if (scale >= 3) {
-            while (scale > 1) {
-                downScale();
+            while (scale > 0.5f) {
+                if (System.currentTimeMillis() - intervalStart > 5) {
+                    downScale();
+                    intervalStart = System.currentTimeMillis();
+                }
             }
 
             return;
         }
         while (scale < 3) {
-            upScale();
+            if (System.currentTimeMillis() - intervalStart > 5) {
+
+                upScale();
+                intervalStart = System.currentTimeMillis();
+            }
         }
     }
 
 
     public void upScale() {
-        scale += SCALE_STEP;
+        scale *= (1 + SCALE_STEP);
         if (scale >= SCALE_MAX) {
             scale = SCALE_MAX;
         }
     }
 
     public void downScale() {
-        scale -= SCALE_STEP;
+        scale *= (1 - SCALE_STEP);
         if (scale <= SCALE_MIN) {
             scale = SCALE_MIN;
         }

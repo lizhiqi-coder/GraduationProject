@@ -53,10 +53,11 @@ public class BaseActivity extends AppCompatActivity {
                 switch (action) {
 
                     case MotionEvent.ACTION_DOWN:
-                        previousX = event.getX();
-                        previousY = event.getY();
 
                         if (event.getPointerCount() == 1) {
+
+                            previousX = event.getX();
+                            previousY = event.getY();
                             clickCount++;
                             if (clickCount == 1) {
                                 firstClickTime = System.currentTimeMillis();
@@ -117,6 +118,9 @@ public class BaseActivity extends AppCompatActivity {
 
                                 }
                             }
+
+                            previousX = event.getX();
+                            previousY = event.getY();
 
                             break;
                         }

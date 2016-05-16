@@ -9,6 +9,6 @@ public class Constant {
 
     public static final String UNIFORM_MATRIX = "u_matrix";
 
-    public static final int DOUBLE_CLICK_TIME_INTERVAL = 500;
+    public static final int DOUBLE_CLICK_TIME_INTERVAL = 300;
 
 }
