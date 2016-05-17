@@ -8,6 +8,7 @@ import android.opengl.Matrix;
 import com.example.admin.graduationproject.R;
 import com.example.admin.graduationproject.model.Ball;
 import com.example.admin.graduationproject.programs.BallProgram;
+import com.example.admin.graduationproject.utils.LogUtils;
 import com.example.admin.graduationproject.utils.TimGL2Utils;
 
 import javax.microedition.khronos.egl.EGLConfig;
@@ -25,6 +26,7 @@ import static android.opengl.Matrix.setIdentityM;
 
 
 public class BallRender extends BaseRender implements Renderer {
+    private static final String TAG = "ball_render";
 
 
     private BallProgram ballProgram;
@@ -75,9 +77,6 @@ public class BallRender extends BaseRender implements Renderer {
     @Override
     public void onDrawFrame(GL10 arg0) {
 
-        rotateM(modelMatrix, 0, -xAngle, 1, 0, 0);
-        rotateM(modelMatrix, 0, -yAngle, 0, 1, 0);
-        rotateM(modelMatrix, 0, -zAngle, 0, 0, 1);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -88,11 +87,23 @@ public class BallRender extends BaseRender implements Renderer {
 
 
     private void drawBall() {
+        setIdentityM(modelMatrix,0);
+
+        rotateM(modelMatrix, 0, -xAngle, 1, 0, 0);
+        rotateM(modelMatrix, 0, -yAngle, 0, 1, 0);
+        rotateM(modelMatrix, 0, -zAngle, 0, 0, 1);
+
+        LogUtils.d(TAG,"xAngle--> "+xAngle);
+        LogUtils.d(TAG,"yAngle--> "+yAngle);
+        LogUtils.d(TAG,"zAngle--> "+zAngle);
+
         updateMatrix();
+
         ballProgram.useProgram();
         ballProgram.setData(modelViewProjectMatrix, textrueID);
         mBall.bindProgram(ballProgram);
         mBall.draw();
+
     }
 
     @Override
