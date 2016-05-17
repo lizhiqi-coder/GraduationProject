@@ -89,11 +89,6 @@ public class BaseActivity extends AppCompatActivity {
                                 lastDistance = currentDistance;
                             } else {
 
-                                Point scaleCenter = new Point(
-                                        (event.getX(0) + event.getX(1)) / 2f,
-                                        (event.getY(0) + event.getY(1)) / 2f,
-                                        0f);
-
                                 if (currentDistance - lastDistance > 5) {
 
                                     //增加
@@ -124,6 +119,13 @@ public class BaseActivity extends AppCompatActivity {
                             previousY = event.getY();
 
                             break;
+                        }
+
+                        //防止滑动和双点击冲突
+                        if (event.getPointerCount() == 1 && clickCount == 1) {
+                            clickCount = 0;
+                            firstClickTime = 0;
+                            secondClickTime = 0;
                         }
 
 
