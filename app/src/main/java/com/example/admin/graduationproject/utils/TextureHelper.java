@@ -34,6 +34,8 @@ import static android.opengl.GLUtils.texImage2D;
  * Created by admin on 2016/5/1.
  */
 public class TextureHelper {
+    private static final String TAG = "th";
+
     public static int loadTexture(Context context, int resId) {
         return 0;
     }
@@ -109,6 +111,8 @@ public class TextureHelper {
         }
         GLUtils.texImage2D(GL_TEXTURE_2D, 0, bitmapTmp, 0);
         bitmapTmp.recycle();
+
+        glBindTexture(GL_TEXTURE_2D, 0);
 
         return textureId;
     }
