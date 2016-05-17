@@ -12,7 +12,7 @@ import static android.opengl.GLES20.glDrawElements;
 /**
  * Created by admin on 2016/5/9.
  */
-public class Skybox {
+public class Skybox extends Base3DModel<SkyboxShaderProgram>{
     private static final int SKYBOX_STEP = 3;
 
     private final VertexArray vertexArray;
@@ -62,7 +62,7 @@ public class Skybox {
 
     }
 
-    public void bindData(SkyboxShaderProgram program) {
+    public void bindProgram(SkyboxShaderProgram program) {
         vertexArray.setVertexAttribPointer(0, program.getAPositionLocation(), SKYBOX_STEP, 0);
     }
 

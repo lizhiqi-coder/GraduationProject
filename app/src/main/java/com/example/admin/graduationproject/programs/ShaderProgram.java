@@ -6,7 +6,7 @@ import com.example.admin.graduationproject.utils.ShaderHelper;
 
 import static android.opengl.GLES20.glUseProgram;
 
-public class ShaderProgram {
+public abstract class ShaderProgram {
     //Uniform constants
     protected static final String U_MATRIX = "u_Matrix";
     protected static final String U_TEXTURE_UNIT = "u_TextureUnit";
@@ -31,4 +31,6 @@ public class ShaderProgram {
     public void useProgram() {
         glUseProgram(program);
     }
+
+    abstract public void setData(float[] matrix, int textureId);
 }

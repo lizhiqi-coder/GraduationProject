@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.admin.graduationproject.R;
-import com.example.admin.graduationproject.model.Ball;
 import com.example.admin.graduationproject.render.BallRender;
 import com.example.admin.graduationproject.utils.AppUtils;
 
@@ -21,8 +20,6 @@ public class BallActivity extends BaseActivity {
     private GLSurfaceView glSurfaceView;
     private BallRender mRender;
     private boolean hasSetRender = false;
-
-    private Ball mBall;
 
     private FloatingActionButton mFab;
 
@@ -40,12 +37,11 @@ public class BallActivity extends BaseActivity {
         mFab = (FloatingActionButton) findViewById(R.id.ball_fab);
 
         mRender = new BallRender(this);
-        mBall = new Ball(this);
 
         if (AppUtils.isOpenGl2Support()) {
             glSurfaceView.setEGLContextClientVersion(2);
 
-            glSurfaceView.setRenderer(mBall);
+            glSurfaceView.setRenderer(mRender);
 
             hasSetRender = true;
         } else {
@@ -65,8 +61,8 @@ public class BallActivity extends BaseActivity {
                     case MotionEvent.ACTION_MOVE:
                         float dy = y - mPreviousY;// 计算触控笔Y位移
                         float dx = x - mPreviousX;// 计算触控笔X位移
-                        mBall.yAngle += dx * 0.3f;// 设置填充椭圆绕y轴旋转的角度
-                        mBall.xAngle += dy * 0.3f;// 设置填充椭圆绕x轴旋转的角度
+                        mRender.yAngle += dx * 0.3f;// 设置填充椭圆绕y轴旋转的角度
+                        mRender.xAngle += dy * 0.3f;// 设置填充椭圆绕x轴旋转的角度
                 }
                 mPreviousY = y;// 记录触控笔位置
                 mPreviousX = x;// 记录触控笔位置

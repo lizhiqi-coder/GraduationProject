@@ -89,8 +89,8 @@ public class SkyboxRender extends BaseRender implements GLSurfaceView.Renderer {
         updateMatrix();
 
         program.useProgram();
-        program.setUniforms(modelViewProjectMatrix, texture);
-        skybox.bindData(program);
+        program.setData(modelViewProjectMatrix, texture);
+        skybox.bindProgram(program);
         skybox.draw();
 
     }

@@ -1,13 +1,11 @@
 package com.example.admin.graduationproject.model;
 
 import com.example.admin.graduationproject.geometry.Point;
-import com.example.admin.graduationproject.geometry.SquareFace;
+import com.example.admin.graduationproject.programs.ShaderProgram;
 
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
-
-import javax.microedition.khronos.opengles.GL10;
 
 /**
  * Created by admin on 2016/5/5.
@@ -73,8 +71,14 @@ public class CubeModel extends Base3DModel {
         return vertexData;
     }
 
+
     @Override
-    public void draw(GL10 gl) {
+    public void bindProgram(ShaderProgram program) {
+
+    }
+
+    @Override
+    public void draw() {
 
     }
 }
