@@ -10,10 +10,11 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.admin.graduationproject.activitys.BallActivity;
 import com.example.admin.graduationproject.activitys.DisplayActivity;
 import com.example.admin.graduationproject.activitys.SkyboxActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,15 +23,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        findViewById(R.id.btn_cube).setOnClickListener(this);
+        findViewById(R.id.btn_ball).setOnClickListener(this);
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
 //                        .setAction("Action", null).show();
-
-                Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
-                startActivity(intent);
 
             }
         });
@@ -59,13 +61,23 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.action_settings:
                 return true;
-            case R.id.skybox:
-                Intent intent = new Intent(MainActivity.this, SkyboxActivity.class);
-                startActivity(intent);
 
-                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_cube:
+                Intent intentCube = new Intent(MainActivity.this, SkyboxActivity.class);
+                startActivity(intentCube);
+                break;
+            case R.id.btn_ball:
+                Intent intentBall = new Intent(MainActivity.this, BallActivity.class);
+                startActivity(intentBall);
+                break;
+        }
     }
 }

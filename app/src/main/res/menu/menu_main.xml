@@ -7,9 +7,4 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
-    <item android:id="@+id/skybox"
-        android:orderInCategory="101"
-        android:title="天空盒盖"
-        app:showAsAction="never"
-        />
 </menu>

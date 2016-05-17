@@ -1,5 +1,6 @@
 package com.example.admin.graduationproject.activitys;
 
+import android.content.Intent;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -52,6 +53,10 @@ public class SkyboxActivity extends BaseActivity {
         myDialog.positive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(SkyboxActivity.this
+                        , BallActivity.class);
+                startActivity(intent);
+
                 myDialog.dismiss();
             }
         });
