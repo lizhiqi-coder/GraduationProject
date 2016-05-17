@@ -3,8 +3,14 @@ package com.example.admin.graduationproject.utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.opengl.GLUtils;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import static android.opengl.GLES20.GL_CLAMP_TO_EDGE;
 import static android.opengl.GLES20.GL_LINEAR;
+import static android.opengl.GLES20.GL_NEAREST;
 import static android.opengl.GLES20.GL_TEXTURE_2D;
 import static android.opengl.GLES20.GL_TEXTURE_CUBE_MAP;
 import static android.opengl.GLES20.GL_TEXTURE_CUBE_MAP_NEGATIVE_X;
@@ -15,9 +21,12 @@ import static android.opengl.GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_Y;
 import static android.opengl.GLES20.GL_TEXTURE_CUBE_MAP_POSITIVE_Z;
 import static android.opengl.GLES20.GL_TEXTURE_MAG_FILTER;
 import static android.opengl.GLES20.GL_TEXTURE_MIN_FILTER;
+import static android.opengl.GLES20.GL_TEXTURE_WRAP_S;
+import static android.opengl.GLES20.GL_TEXTURE_WRAP_T;
 import static android.opengl.GLES20.glBindTexture;
 import static android.opengl.GLES20.glDeleteTextures;
 import static android.opengl.GLES20.glGenTextures;
+import static android.opengl.GLES20.glTexParameterf;
 import static android.opengl.GLES20.glTexParameteri;
 import static android.opengl.GLUtils.texImage2D;
 
@@ -74,7 +83,34 @@ public class TextureHelper {
         }
         return textureObjectIds[0];
 
+    }
 
+    public static int loadBallMap(Context context, int drawableId)// textureId
+    {
+        int[] textures = new int[1];
+        glGenTextures(1, textures, 0);
+        int textureId = textures[0];
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+        InputStream is = context.getResources().openRawResource(drawableId);
+        Bitmap bitmapTmp;
+        try {
+            bitmapTmp = BitmapFactory.decodeStream(is);
+        } finally {
+            try {
+                is.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        GLUtils.texImage2D(GL_TEXTURE_2D, 0, bitmapTmp, 0);
+        bitmapTmp.recycle();
+
+        return textureId;
     }
 
 

@@ -3,13 +3,12 @@ package com.example.admin.graduationproject.render;
 import android.content.Context;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView.Renderer;
-import android.opengl.Matrix;
 
 import com.example.admin.graduationproject.R;
 import com.example.admin.graduationproject.model.Ball;
 import com.example.admin.graduationproject.programs.BallProgram;
 import com.example.admin.graduationproject.utils.LogUtils;
-import com.example.admin.graduationproject.utils.TimGL2Utils;
+import com.example.admin.graduationproject.utils.TextureHelper;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -30,9 +29,12 @@ public class BallRender extends BaseRender implements Renderer {
 
 
     private BallProgram ballProgram;
-    private int textrueID;
+
+    private int textureID;
 
     private Ball mBall;
+
+    private int textureResId;
 
     public BallRender(Context context) {
         super(context);
@@ -40,7 +42,6 @@ public class BallRender extends BaseRender implements Renderer {
 
 
     public float xAngle;
-
     public float yAngle;
     public float zAngle;
 
@@ -52,8 +53,11 @@ public class BallRender extends BaseRender implements Renderer {
         mBall = new Ball();
         ballProgram = new BallProgram(mContext);
 
-        textrueID = TimGL2Utils.initTexture(mContext, R.mipmap.overall_view01);
+        if (textureResId <= 0) {
 
+            textureResId = R.mipmap.overall_view03;
+        }
+        textureID = TextureHelper.loadBallMap(mContext, textureResId);
     }
 
     @Override
@@ -77,12 +81,15 @@ public class BallRender extends BaseRender implements Renderer {
     @Override
     public void onDrawFrame(GL10 arg0) {
 
-
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         drawBall();
 
+    }
 
+    public void setTextrueResId(int id) {
+        textureResId = id;
+        textureID = TextureHelper.loadBallMap(mContext, textureResId);
     }
 
 
@@ -102,7 +109,7 @@ public class BallRender extends BaseRender implements Renderer {
         updateMatrix();
 
         ballProgram.useProgram();
-        ballProgram.setData(modelViewProjectMatrix, textrueID);
+        ballProgram.setData(modelViewProjectMatrix, textureID);
         mBall.bindProgram(ballProgram);
         mBall.draw();
 
