@@ -21,8 +21,8 @@ import static android.opengl.GLES20.glViewport;
 import static android.opengl.Matrix.frustumM;
 import static android.opengl.Matrix.rotateM;
 import static android.opengl.Matrix.scaleM;
-import static android.opengl.Matrix.translateM;
 import static android.opengl.Matrix.setIdentityM;
+import static android.opengl.Matrix.translateM;
 
 
 public class BallRender extends BaseRender implements Renderer {
@@ -63,9 +63,9 @@ public class BallRender extends BaseRender implements Renderer {
         float ratio = width / (float) height;
         frustumM(projectMatrix, 0, -ratio, ratio, -1, 1, 1, 20);
 
-        Matrix.setIdentityM(modelMatrix, 0);
+        setIdentityM(modelMatrix, 0);
         setIdentityM(viewMatrix, 0);
-        Matrix.setIdentityM(modelViewProjectMatrix, 0);
+        setIdentityM(modelViewProjectMatrix, 0);
 
         translateM(projectMatrix, 0, 0, 0, -2);
         // rotateM(projectMatrix, 0, -90, 1, 0, 0);
@@ -87,15 +87,17 @@ public class BallRender extends BaseRender implements Renderer {
 
 
     private void drawBall() {
-        setIdentityM(modelMatrix,0);
+        setIdentityM(modelMatrix, 0);
 
         rotateM(modelMatrix, 0, -xAngle, 1, 0, 0);
         rotateM(modelMatrix, 0, -yAngle, 0, 1, 0);
         rotateM(modelMatrix, 0, -zAngle, 0, 0, 1);
 
-        LogUtils.d(TAG,"xAngle--> "+xAngle);
-        LogUtils.d(TAG,"yAngle--> "+yAngle);
-        LogUtils.d(TAG,"zAngle--> "+zAngle);
+        LogUtils.d(TAG, "xAngle--> " + xAngle);
+        LogUtils.d(TAG, "yAngle--> " + yAngle);
+        LogUtils.d(TAG, "zAngle--> " + zAngle);
+
+        scaleM(modelMatrix, 0, scale, scale, scale);
 
         updateMatrix();
 
