@@ -87,9 +87,16 @@ public class BallRender extends BaseRender implements Renderer {
 
     }
 
-    public void setTextrueResId(int id) {
+
+    public interface CallBack {
+        public void onLoadComplete();
+    }
+
+    public void setTextrueResId(int id, CallBack callBack) {
+
         textureResId = id;
         textureID = TextureHelper.loadBallMap(mContext, textureResId);
+        callBack.onLoadComplete();
     }
 
 

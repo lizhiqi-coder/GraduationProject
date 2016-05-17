@@ -1,5 +1,6 @@
 package com.example.admin.graduationproject.activitys;
 
+import android.app.ProgressDialog;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,8 +24,8 @@ public class BallActivity extends BaseActivity {
 
     private FloatingActionButton mFab;
 
+    private ProgressDialog mProgressBar;
 
-    private View mHeadLine;
 
     private static int[] textureList = {
 
@@ -45,6 +46,7 @@ public class BallActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ball);
+        initView();
 
         glSurfaceView = (GLSurfaceView) findViewById(R.id.ball_surface);
 
@@ -81,8 +83,16 @@ public class BallActivity extends BaseActivity {
                 @Override
                 public void onClick(View view) {
 
-                    mRender.setTextrueResId(TextureId);
                     popMenu.dismissWindow();
+                    mProgressBar.show();
+
+                    mRender.setTextrueResId(TextureId, new BallRender.CallBack() {
+                        @Override
+                        public void onLoadComplete() {
+                            mProgressBar.dismiss();
+                        }
+                    });
+
                 }
             });
         }
@@ -97,6 +107,13 @@ public class BallActivity extends BaseActivity {
             }
         });
 
+    }
+
+    private void initView() {
+        mProgressBar = new ProgressDialog(this);
+        mProgressBar.setMessage("全景图片文件较大，请耐性等候加载。。。");
+        mProgressBar.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressBar.setCancelable(false);
     }
 
     @Override
