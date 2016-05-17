@@ -64,8 +64,14 @@ public class BaseActivity extends AppCompatActivity {
                             } else {
                                 secondClickTime = System.currentTimeMillis();
                                 if (secondClickTime - firstClickTime < Constant.DOUBLE_CLICK_TIME_INTERVAL) {
-
                                     render.handleDoubleClick();
+                                    surfaceView.queueEvent(new Runnable() {
+                                        @Override
+                                        public void run() {
+
+                                            render.handleDoubleClick();
+                                        }
+                                    });
                                 }
                                 clickCount = 0;
                                 firstClickTime = 0;

@@ -51,24 +51,8 @@ public class BallActivity extends BaseActivity {
         }
 
 
+        initTouchListener(glSurfaceView, mRender);
 
-        glSurfaceView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent event) {
-                float y = event.getY();
-                float x = event.getX();
-                switch (event.getAction()) {
-                    case MotionEvent.ACTION_MOVE:
-                        float dy = y - mPreviousY;// 计算触控笔Y位移
-                        float dx = x - mPreviousX;// 计算触控笔X位移
-                        mRender.yAngle += dx * 0.3f;// 设置填充椭圆绕y轴旋转的角度
-                        mRender.xAngle += dy * 0.3f;// 设置填充椭圆绕x轴旋转的角度
-                }
-                mPreviousY = y;// 记录触控笔位置
-                mPreviousX = x;// 记录触控笔位置
-                return true;
-            }
-        });
 
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override

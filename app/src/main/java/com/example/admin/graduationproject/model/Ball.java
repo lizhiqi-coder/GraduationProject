@@ -1,41 +1,27 @@
 package com.example.admin.graduationproject.model;
 
-import static android.opengl.GLES20.*;
-import static android.opengl.Matrix.*;
+import com.example.admin.graduationproject.construction.VertexArray;
+import com.example.admin.graduationproject.programs.BallProgram;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
 import java.util.ArrayList;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
+import static android.opengl.GLES20.GL_TRIANGLES;
+import static android.opengl.GLES20.glDrawArrays;
 
-import android.content.Context;
-import android.opengl.GLES20;
-import android.opengl.GLSurfaceView.Renderer;
-import android.opengl.Matrix;
+/**
+ * Created by admin on 2016/5/17.
+ */
+public class Ball extends Base3DModel<BallProgram> {
 
-import com.example.admin.graduationproject.R;
-import com.example.admin.graduationproject.utils.TimGL2Utils;
-
-
-public class Ball implements Renderer {
-    Context mContext;
-    private int mProgram;
-    private int mAPositionHandler;
-    private int mUProjectMatrixHandler;
-    private int mATextureCoordHandler;
-    private final float[] projectMatrix = new float[16];
+    private static final int BALL_VERTEX_STEP = 3;
+    private static final int BALL_TEXTURE_STEP = 2;
+    private VertexArray vertexArray;
+    private VertexArray textureArray;
     private int mSize;
-    private FloatBuffer vertexBuff;
 
-    private FloatBuffer textureBuff;
-    private int textrueID;
-
-    public Ball(Context context) {
-        mContext = context;
+    public Ball() {
         init();
+
     }
 
     public void init() {
@@ -133,93 +119,29 @@ public class Ball implements Renderer {
         for (int i = 0; i < texture.length; i++) {
             texture[i] = textureList.get(i);
         }
-        textureBuff = ByteBuffer.allocateDirect(texture.length * 4)
-                .order(ByteOrder.nativeOrder()).asFloatBuffer();
-        textureBuff.put(texture);
-        textureBuff.position(0);
+
+        textureArray = new VertexArray(texture);
+
 
         float vetex[] = new float[mSize * 3];
         for (int i = 0; i < vetex.length; i++) {
             vetex[i] = vetexList.get(i);
         }
-        vertexBuff = ByteBuffer.allocateDirect(vetex.length * 4)
-                .order(ByteOrder.nativeOrder()).asFloatBuffer();
-        vertexBuff.put(vetex);
-        vertexBuff.position(0);
+
+        vertexArray = new VertexArray(vetex);
+
 
     }
 
     @Override
-    public void onDrawFrame(GL10 arg0) {
+    public void bindProgram(BallProgram program) {
+        vertexArray.setVertexAttribPointer(0, program.getAPosition(), BALL_VERTEX_STEP, 0);
+        textureArray.setVertexAttribPointer(0, program.getATexture(), BALL_TEXTURE_STEP, 0);
+    }
 
-        rotateM(mCurrMatrix, 0, -xAngle, 1, 0, 0);
-        rotateM(mCurrMatrix, 0, -yAngle, 0, 1, 0);
-        rotateM(mCurrMatrix, 0, -zAngle, 0, 0, 1);
-
-        glClearColor(1, 1, 1, 1);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        glActiveTexture(GLES20.GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, textrueID);
-        glUniformMatrix4fv(mUProjectMatrixHandler, 1, false,
-                getfinalMVPMatrix(), 0);
+    @Override
+    public void draw() {
         glDrawArrays(GL_TRIANGLES, 0, mSize);
-    }
-
-    public float xAngle;
-    public float yAngle;
-    public float zAngle;
-
-    final float mCurrMatrix[] = new float[16];
-
-    final float mMVPMatrix[] = new float[16];
-
-    public float[] getfinalMVPMatrix() {
-        Matrix.multiplyMM(mMVPMatrix, 0, projectMatrix, 0, mCurrMatrix, 0);
-        Matrix.setIdentityM(mCurrMatrix, 0);
-        return mMVPMatrix;
-    }
-
-    @Override
-    public void onSurfaceChanged(GL10 gl, int width, int height) {
-        glViewport(0, 0, width, height);
-        GLES20.glEnable(GLES20.GL_CULL_FACE);
-        float ratio = width / (float) height;
-        frustumM(projectMatrix, 0, -ratio, ratio, -1, 1, 1, 20);
-
-        Matrix.setIdentityM(mCurrMatrix, 0);
-        Matrix.setIdentityM(mMVPMatrix, 0);
-
-        translateM(projectMatrix, 0, 0, 0, -2);
-        // rotateM(projectMatrix, 0, -90, 1, 0, 0);
-        scaleM(projectMatrix, 0, 4, 4, 4);
-
-        mProgram = TimGL2Utils.getProgram(mContext);
-        glUseProgram(mProgram);
-
-        mAPositionHandler = glGetAttribLocation(mProgram, "aPosition");
-        mUProjectMatrixHandler = glGetUniformLocation(mProgram,
-                "uProjectMatrix");
-        mATextureCoordHandler = glGetAttribLocation(mProgram, "aTextureCoord");
-
-        System.out.println("mAPositionHandler:" + mAPositionHandler);
-        System.out.println("mUProjectMatrixHandler:" + mUProjectMatrixHandler);
-        System.out.println("mATextureCoordHandler:" + mATextureCoordHandler);
-        textrueID = TimGL2Utils.initTexture(mContext, R.mipmap.overall_view01);
-        System.out.println("textureID:" + textrueID);
-
-        glVertexAttribPointer(mAPositionHandler, 3, GL_FLOAT, false, 0,
-                vertexBuff);
-        glVertexAttribPointer(mATextureCoordHandler, 2, GL_FLOAT, false, 0,
-                textureBuff);
-
-        glEnableVertexAttribArray(mAPositionHandler);
-        glEnableVertexAttribArray(mATextureCoordHandler);
-    }
-
-    @Override
-    public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-
     }
 
 }
