@@ -58,10 +58,15 @@ public class BaseActivity extends AppCompatActivity {
 
                             previousX = event.getX();
                             previousY = event.getY();
+                            if (System.currentTimeMillis() - firstClickTime > Constant.DOUBLE_CLICK_TIME_INTERVAL) {
+                                clickCount = 0;
+                                firstClickTime = 0;
+                                secondClickTime = 0;
+                            }
                             clickCount++;
                             if (clickCount == 1) {
                                 firstClickTime = System.currentTimeMillis();
-                            } else {
+                            } else {//clickCount==2
                                 secondClickTime = System.currentTimeMillis();
                                 if (secondClickTime - firstClickTime < Constant.DOUBLE_CLICK_TIME_INTERVAL) {
 

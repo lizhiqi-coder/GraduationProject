@@ -32,13 +32,16 @@ public class BallActivity extends BaseActivity {
             R.mipmap.overall_view01,
             R.mipmap.overall_view02,
             R.mipmap.overall_view03,
+            R.mipmap.world
 
     };
+
 
     private static String[] textureNames = {
             "aaa",
             "bbb",
-            "ccc"
+            "ccc",
+            "word"
     };
 
 
@@ -52,7 +55,6 @@ public class BallActivity extends BaseActivity {
 
         mFab = (FloatingActionButton) findViewById(R.id.ball_fab);
 
-//        mHeadLine = findViewById(R.id.head_line);
 
         mRender = new BallRender(this);
 
@@ -74,10 +76,10 @@ public class BallActivity extends BaseActivity {
         final MenuPopWindow popMenu = new MenuPopWindow(this);
 
         for (int i = 0; i < textureList.length; i++) {
-            final int TextureId = textureList[i];
+            final int textureResId = textureList[i];
 
             MenuPopWindow.Item item = popMenu.createItem();
-            item.setItemImg(TextureId);
+            item.setItemImg(textureResId);
             item.setItemTitle(textureNames[i]);
             item.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -86,7 +88,7 @@ public class BallActivity extends BaseActivity {
                     popMenu.dismissWindow();
                     mProgressBar.show();
 
-                    mRender.setTextrueResId(TextureId, new BallRender.CallBack() {
+                    mRender.setTextrueResId(textureResId, new BallRender.CallBack() {
                         @Override
                         public void onLoadComplete() {
                             mProgressBar.dismiss();
