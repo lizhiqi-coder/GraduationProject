@@ -16,6 +16,8 @@ import com.example.admin.graduationproject.utils.TextureHelper;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import static android.opengl.GLES20.GL_BACK;
+import static android.opengl.GLES20.glCullFace;
 import static android.opengl.GLES20.glViewport;
 import static android.opengl.Matrix.perspectiveM;
 import static android.opengl.Matrix.rotateM;
@@ -58,6 +60,8 @@ public class SkyboxRender extends BaseRender implements GLSurfaceView.Renderer {
     @Override
     public void onSurfaceChanged(GL10 gl10, int w, int h) {
         glViewport(0, 0, w, h);
+
+//        glCullFace(GL_BACK);
 
         adapterScreen(w, h);
 

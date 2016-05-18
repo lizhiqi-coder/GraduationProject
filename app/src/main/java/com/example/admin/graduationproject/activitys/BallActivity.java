@@ -92,6 +92,8 @@ public class BallActivity extends BaseActivity {
                         @Override
                         public void onLoadComplete() {
                             mProgressBar.dismiss();
+                            glSurfaceView.onPause();
+                            glSurfaceView.onResume();
                         }
                     });
 

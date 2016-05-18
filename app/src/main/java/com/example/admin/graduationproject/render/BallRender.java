@@ -48,6 +48,7 @@ public class BallRender extends BaseRender implements Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+        LogUtils.d(TAG, "onSurfaceCreated");
         clearScreenByColor(R.color.black);
 
         mBall = new Ball();
@@ -62,6 +63,7 @@ public class BallRender extends BaseRender implements Renderer {
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
+        LogUtils.d(TAG, "onSurfaceChanged");
         glViewport(0, 0, width, height);
         GLES20.glEnable(GLES20.GL_CULL_FACE);
         float ratio = width / (float) height;
@@ -80,6 +82,7 @@ public class BallRender extends BaseRender implements Renderer {
 
     @Override
     public void onDrawFrame(GL10 arg0) {
+//        LogUtils.d(TAG,"onDrawFrame");
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -107,9 +110,9 @@ public class BallRender extends BaseRender implements Renderer {
         rotateM(modelMatrix, 0, -yAngle, 0, 1, 0);
         rotateM(modelMatrix, 0, -zAngle, 0, 0, 1);
 
-        LogUtils.d(TAG, "xAngle--> " + xAngle);
-        LogUtils.d(TAG, "yAngle--> " + yAngle);
-        LogUtils.d(TAG, "zAngle--> " + zAngle);
+//        LogUtils.d(TAG, "xAngle--> " + xAngle);
+//        LogUtils.d(TAG, "yAngle--> " + yAngle);
+//        LogUtils.d(TAG, "zAngle--> " + zAngle);
 
         scaleM(modelMatrix, 0, scale, scale, scale);
 
