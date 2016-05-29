@@ -29,19 +29,28 @@ public class BallActivity extends BaseActivity {
 
     private static int[] textureList = {
 
-            R.mipmap.overall_view01,
             R.mipmap.overall_view02,
             R.mipmap.overall_view03,
-            R.mipmap.world
-
+            R.mipmap.world,
+            R.mipmap.all_view,
+            R.mipmap.all_view02,
+            R.mipmap.all_view03,
+            R.mipmap.all_view04,
+            R.mipmap.all_view05,
+            R.mipmap.all_view06,
     };
 
 
     private static String[] textureNames = {
-            "aaa",
-            "bbb",
-            "ccc",
-            "word"
+            "overall_view02",
+            "overall_view03",
+            "world",
+            "all_view",
+            "all_view02",
+            "all_view03",
+            "all_view04",
+            "all_view05",
+            "all_view06"
     };
 
 

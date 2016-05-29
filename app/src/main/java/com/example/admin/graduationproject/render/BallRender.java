@@ -56,7 +56,7 @@ public class BallRender extends BaseRender implements Renderer {
 
         if (textureResId <= 0) {
 
-            textureResId = R.mipmap.overall_view03;
+            textureResId = R.mipmap.world;
         }
         textureID = TextureHelper.loadBallMap(mContext, textureResId);
     }
