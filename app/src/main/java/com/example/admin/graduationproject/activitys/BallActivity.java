@@ -83,32 +83,18 @@ public class BallActivity extends BaseActivity {
         initTouchListener(glSurfaceView, mRender);
 
         final MenuPopWindow popMenu = new MenuPopWindow(this);
-
-        for (int i = 0; i < textureList.length; i++) {
-            final int textureResId = textureList[i];
-
-            MenuPopWindow.Item item = popMenu.createItem();
-            item.setItemImg(textureResId);
-            item.setItemTitle(textureNames[i]);
-            item.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    popMenu.dismissWindow();
-                    mProgressBar.show();
-
-                    mRender.setTextrueResId(textureResId, new BallRender.CallBack() {
-                        @Override
-                        public void onLoadComplete() {
-                            mProgressBar.dismiss();
-                            glSurfaceView.onPause();
-                            glSurfaceView.onResume();
-                        }
-                    });
-
-                }
-            });
-        }
+        popMenu.setSelectImageListener(new MenuPopWindow.SelectImageListener() {
+            @Override
+            public void onSelectImage(String path) {
+                mRender.setTextureResPath(path, new BallRender.CallBack() {
+                    @Override
+                    public void onLoadComplete() {
+                        glSurfaceView.onPause();
+                        glSurfaceView.onResume();
+                    }
+                });
+            }
+        });
 
 
         mFab.setOnClickListener(new View.OnClickListener() {

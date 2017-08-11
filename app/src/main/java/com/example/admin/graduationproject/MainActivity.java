@@ -1,17 +1,17 @@
 package com.example.admin.graduationproject;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.admin.graduationproject.activitys.BallActivity;
-import com.example.admin.graduationproject.activitys.DisplayActivity;
 import com.example.admin.graduationproject.activitys.SkyboxActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -36,6 +36,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        }, 100);
     }
 
     @Override

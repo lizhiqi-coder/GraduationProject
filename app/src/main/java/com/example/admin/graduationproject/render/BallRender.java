@@ -35,6 +35,7 @@ public class BallRender extends BaseRender implements Renderer {
     private Ball mBall;
 
     private int textureResId;
+    private String textureResPath;
 
     public BallRender(Context context) {
         super(context);
@@ -54,11 +55,13 @@ public class BallRender extends BaseRender implements Renderer {
         mBall = new Ball();
         ballProgram = new BallProgram(mContext);
 
-        if (textureResId <= 0) {
+        if (textureResPath == null) {
 
             textureResId = R.mipmap.world;
+            textureID = TextureHelper.loadBallMap(mContext, textureResId);
+        } else {
+            textureID = TextureHelper.loadBallMap(mContext, textureResPath);
         }
-        textureID = TextureHelper.loadBallMap(mContext, textureResId);
     }
 
     @Override
@@ -92,13 +95,19 @@ public class BallRender extends BaseRender implements Renderer {
 
 
     public interface CallBack {
-        public void onLoadComplete();
+        void onLoadComplete();
     }
 
     public void setTextrueResId(int id, CallBack callBack) {
 
         textureResId = id;
         textureID = TextureHelper.loadBallMap(mContext, textureResId);
+        callBack.onLoadComplete();
+    }
+
+    public void setTextureResPath(String imagePath, CallBack callBack) {
+        textureResPath = imagePath;
+        textureID = TextureHelper.loadBallMap(mContext, textureResPath);
         callBack.onLoadComplete();
     }
 

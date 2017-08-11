@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLUtils;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -113,6 +115,41 @@ public class TextureHelper {
         bitmapTmp.recycle();
 
         glBindTexture(GL_TEXTURE_2D, 0);
+
+        return textureId;
+    }
+
+    public static int loadBallMap(Context context, String imagePath)// textureId
+    {
+        int[] textures = new int[1];
+        glGenTextures(1, textures, 0);
+        int textureId = textures[0];
+        glBindTexture(GL_TEXTURE_2D, textureId);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+
+        FileInputStream fis;
+        Bitmap bitmapTmp;
+        try {
+            fis = new FileInputStream(imagePath);
+            bitmapTmp = BitmapFactory.decodeStream(fis);
+
+
+            GLUtils.texImage2D(GL_TEXTURE_2D, 0, bitmapTmp, 0);
+            bitmapTmp.recycle();
+
+            glBindTexture(GL_TEXTURE_2D, 0);
+
+            fis.close();
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         return textureId;
     }
