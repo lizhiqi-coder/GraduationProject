@@ -27,33 +27,6 @@ public class BallActivity extends BaseActivity {
     private ProgressDialog mProgressBar;
 
 
-    private static int[] textureList = {
-
-            R.mipmap.overall_view02,
-            R.mipmap.overall_view03,
-            R.mipmap.world,
-            R.mipmap.all_view,
-            R.mipmap.all_view02,
-            R.mipmap.all_view03,
-            R.mipmap.all_view04,
-            R.mipmap.all_view05,
-            R.mipmap.all_view06,
-    };
-
-
-    private static String[] textureNames = {
-            "overall_view02",
-            "overall_view03",
-            "world",
-            "all_view",
-            "all_view02",
-            "all_view03",
-            "all_view04",
-            "all_view05",
-            "all_view06"
-    };
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
